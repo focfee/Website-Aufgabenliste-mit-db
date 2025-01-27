@@ -5,6 +5,7 @@ class TaskManager {
     init() {
         document.getElementById('add-card').addEventListener('click', () => this.addTask());
         document.getElementById('filter_tasks').addEventListener('change', (event) => this.filterTasks(event.target.value));
+        document.getElementById('filter_search').addEventListener('input', (event) => this.filterSearch(event.target.value));
         this.loadTasks('/tasks');
     }
     addTask() {
@@ -133,6 +134,18 @@ class TaskManager {
             url = `/tasks/status/${filter}`;
         }
         this.loadTasks(url);
+    }
+    filterSearch(query) {
+        const cards = document.querySelectorAll('.card');
+        query = query.toLowerCase();
+        cards.forEach(card => {
+            const title = card.querySelector('.name-text').innerText.toLowerCase();
+            if (title.includes(query)) {
+            card.style.display = 'block';
+            } else {
+            card.style.display= 'none';
+            }
+        });
     }
 }
 new TaskManager();

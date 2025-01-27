@@ -83,7 +83,7 @@ button, .change_button, .delete_button {
 .edit_name:hover, .edit_date:hover, .edit_status:hover {
     background-color: #ffffff6f;
 }
-.filter_tasks, .account_button {
+.filter_tasks, .account_button, .filter_search {
     background-color: #00000009;
     border: none;
     margin-left: 5px;
@@ -91,6 +91,9 @@ button, .change_button, .delete_button {
     font-size: 16px;
     border-radius: 16px;
     box-shadow: 2px 2px 2px #00000024;
+}
+.filter_search {
+    width: 20%;
 }
 .login, .register, .account_settings, .question {
     display: flex;

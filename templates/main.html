@@ -10,6 +10,7 @@
 <body>
     <header class="header">
         <h1 onclick="window.location.href='/documents'">Список дел</h1>
+        <input class="filter_search" maxlength="45" type="text" id="filter_search" placeholder="Поиск по названию... " required>
         <nav class="navigation">
             <button id="add-card" title="Добавить новое дело">➕</button>
             <button class="account_button" onclick="window.location.href='/account'" title="Настройки аккаунта"> {{ username }} 🧑‍💻</button>
