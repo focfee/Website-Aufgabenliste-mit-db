@@ -4,4 +4,6 @@
 
 2. pip install Flask-SQLAlchemy
 
-3. run main.py
+3. pip install pyjwt
+
+4. run main.py
