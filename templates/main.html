@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link href="https://fonts.cdnfonts.com/css/martian-mono" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Список дел</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <h1 onclick="window.location.href='/documents'">Список дел</h1>
+        <nav class="navigation">
+            <button id="add-card" title="Добавить новое дело">➕</button>
+            <button class="account_button" onclick="window.location.href='/account'" title="Настройки аккаунта"> {{ username }} 🧑‍💻</button>
+            <select class="filter_tasks" id="filter_tasks" title="Фильтр дел">
+                <option value="all" title="Показать все дела">Все</option>
+                <option value="создано" title="Показать все созданные дела">Создано</option>
+                <option value="начата работа" title="Показать все начатые дела">Начата работа</option>
+                <option value="закончена работа" title="Показать все законченные дела">Закончена работа</option>
+                <option value="overdue" title="Показать все просроченные дела">Просроченные</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <div class="cards" id="cards-container">
+        </div>
+    </main>
+    <script src="/static/js/js1.js"></script>
+</body>
+</html>

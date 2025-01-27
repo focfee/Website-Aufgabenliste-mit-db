@@ -1,0 +1,174 @@
+body {
+    margin: 0;
+    font-family: 'Martian Mono', sans-serif;
+    color: #000;
+    margin: 0 1%;
+    background-color: #f5f5f5;
+}
+.navigation, .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.header {
+    background-color: #fff;
+    border-radius: 0 0 12px 12px;
+    padding: 1em;
+    margin-bottom: 10px;
+    box-shadow: 2px 2px 2px #00000024;
+}
+.header h1 {
+    margin: 15px;
+    cursor: pointer;
+}
+button, .change_button, .delete_button {
+    background-color: #00000009;
+    font-size: 24px;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 2px 2px 2px #00000024;
+    cursor: pointer;
+}
+.change_button, .delete_button {
+    background-color: #ffffff9e;
+}
+.change_button:hover, .delete_button:hover {
+    background-color: #ffffff6f;
+    transition: background-color 0.3s ease;
+}
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); 
+}
+.card {
+    word-break: break-all;
+    margin: 5px;
+    padding: 15px;
+    height: 250px;
+    width: 330px;
+    background-color: #efe080;
+    border-radius: 12px;
+    box-shadow: 2px 2px 2px #00000024;
+}
+.card li {
+    margin: 30px 0 5px 5px;
+    border-bottom: 1px solid #000;
+    padding-bottom: 5px;
+}
+.pin_decor {
+    font-size: 24px;
+    margin: -50px 0 -20px;
+    display: flex;
+    justify-content: space-between;
+}
+.card_header {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #000;
+    justify-content: space-between;
+}
+.edit_name, .edit_status, .edit_date {
+    display: none;
+    background-color: #ffffff9e;
+    border: none;
+    font-size: 16px;
+    box-shadow: 2px 2px 2px #00000024;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+.edit_name {
+    width: 210px;
+}
+.edit_name:hover, .edit_date:hover, .edit_status:hover {
+    background-color: #ffffff6f;
+}
+.filter_tasks, .account_button {
+    background-color: #00000009;
+    border: none;
+    margin-left: 5px;
+    padding: 1em;
+    font-size: 16px;
+    border-radius: 16px;
+    box-shadow: 2px 2px 2px #00000024;
+}
+.login, .register, .account_settings, .question {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login button, .login input, .question button, .register button, .register input, .question button {
+    background-color: #fff;
+    font-size: 24px;
+    border: none;
+    border-radius: 27px;
+    padding: 10px;
+    box-shadow: 2px 2px 2px #00000024;
+    cursor: pointer;
+}
+.login button, .register button {
+    width: 70%;
+}
+.login input, .register input {
+    width: 90%;
+    margin: 20px;
+}
+.login h2, .login form, .register h2, .register form {
+    background-color: #00000009;
+    border-radius: 12px;
+    box-shadow: 2px 2px 2px #00000024;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    margin-bottom: 10px;
+    width: 50%;
+}
+.login form, .register form {
+    flex-direction: column;
+    padding: 2em 1em;
+    margin: 1em;
+}
+.delete, .button1, .account_settings input {
+    background-color: #fff;
+    font-size: 24px;
+    border: none;
+    border-radius: 27px;
+    width: 100%;
+    margin: 5px;
+    padding: 10px;
+    box-shadow: 2px 2px 2px #00000024;
+    cursor: pointer;
+}
+.delete:hover {
+    background-color: #ff9393;
+}
+.account_settings h2, .account_settings form {
+    background-color: #00000009;
+    width: 75%;
+    padding: 1em 0;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    box-shadow: 2px 2px 2px #00000024;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.account_settings form {
+    padding: 2em 0;
+    margin: 1em;
+}
+.form_change {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+}
+.error {
+    margin: 0;
+    color: red;
+}
+button:hover, .filter_tasks:hover, .account_button:hover{
+    background-color: #0000001a;
+    transition: background-color 0.3s ease;
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link href="https://fonts.cdnfonts.com/css/martian-mono" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Вход</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <h1 onclick="window.location.href='/documents'">Список дел</h1>
+        <button class="account_button" onclick="window.location.href='/account'" title="Настройки аккаунта"> {{ username }} 🧑‍💻</button>
+    </header>
+    <main>
+        <div class="login">
+            <h2>Вход</h2>
+            <form id="login-form" action="/login" method="post">
+                <p class="error"> {{error}} </p>
+                <input maxlength="20" type="text" id="login" name="login" placeholder="Логин" required>
+                <input maxlength="60" type="password" id="password" name="password" placeholder="Пароль" required>
+                <button type="submit" title="Войти в аккаунт">Войти</button>
+            </form>
+            <div class="question">
+                <p>Не зарегистрированы?</p>
+                <button onclick="window.location.href='/register'" title="Зарегистрировать новый аккаунт">Создать</button>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
