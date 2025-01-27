@@ -1,5 +1,7 @@
 # Website-Aufgabenliste-mit-db
 
-pip install Flask
-and 
-pip install Flask-SQLAlchemy
+1. pip install Flask
+
+2. pip install Flask-SQLAlchemy
+
+3. run main.py
