@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from models import db, User, Task
 import hashlib
 import jwt
+import logging
 
 app = Flask(__name__)
 app.secret_key = 'eto_ne_sekretnyi_klyuch_eto_prosto_klyuch_ne_sekretnyi_ne_trogai_ego'
@@ -14,6 +15,9 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
+# Настройка логирования
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s %(message)s')
+
 def token_required(f):
     def wrapper(*args, **kwargs):
         token = request.cookies.get('token')
@@ -22,7 +26,13 @@ def token_required(f):
         try:
             data = jwt.decode(token, app.secret_key, algorithms=["HS256"])
             current_user = User.query.filter_by(username=data['username']).first()
-        except:
+            if not current_user:
+                return redirect(url_for('login'))
+        except jwt.ExpiredSignatureError:
+            return redirect(url_for('login'))
+        except jwt.InvalidTokenError:
+            return redirect(url_for('login'))
+        except Exception as e:
             return redirect(url_for('login'))
         return f(current_user, *args, **kwargs)
     wrapper.__name__ = f.__name__
@@ -70,25 +80,34 @@ def index(current_user):
 @token_required
 def account(current_user):
     if request.method == "POST":
-        new_login = request.form.get('login')
-        new_password = request.form.get('password')
-        if new_login:
-            current_user.username = new_login
-        if new_password:
-            current_user.password = hashlib.sha256(new_password.encode()).hexdigest()
-        db.session.commit()
+        try:
+            new_login = request.form.get('login')
+            new_password = request.form.get('password')
+            if new_login:
+                current_user.username = new_login
+            if new_password:
+                current_user.password = hashlib.sha256(new_password.encode()).hexdigest()
+            db.session.commit()
+        except Exception as e:
+            return "Internal Server Error", 500
         return redirect(url_for('account'))
-    return render_template('account.html', username=current_user.username)
+    try:
+        return render_template('account.html', username=current_user.username)
+    except Exception as e:
+        return "Internal Server Error", 500
 
 @app.route("/delete_account")
 @token_required
 def delete_account(current_user):
-    Task.query.filter_by(user_id=current_user.id).delete()
-    db.session.delete(current_user)
-    db.session.commit()
-    resp = make_response(redirect(url_for('register')))
-    resp.delete_cookie('token')
-    return resp
+    try:
+        Task.query.filter_by(user_id=current_user.id).delete()
+        db.session.delete(current_user)
+        db.session.commit()
+        resp = make_response(redirect(url_for('register')))
+        resp.delete_cookie('token')
+        return resp
+    except Exception as e:
+        return "Internal Server Error", 500
 
 @app.route("/logout")
 def logout():
@@ -121,36 +140,45 @@ def overdue_tasks(current_user):
 @app.route("/tasks/add", methods=["POST"])
 @token_required
 def add_task(current_user):
-    name = request.json['name']
-    status = request.json['status']
-    data = request.json['data']
-    new_task = Task(name=name, status=status, data=data, user_id=current_user.id)
-    db.session.add(new_task)
-    db.session.commit()
-    return jsonify({"id": new_task.id, "name": new_task.name, "status": new_task.status, "data": new_task.data})
+    try:
+        name = request.json['name']
+        status = request.json['status']
+        data = request.json['data']
+        new_task = Task(name=name, status=status, data=data, user_id=current_user.id)
+        db.session.add(new_task)
+        db.session.commit()
+        return jsonify({"id": new_task.id, "name": new_task.name, "status": new_task.status, "data": new_task.data})
+    except Exception as e:
+        return "Internal Server Error", 500
 
 @app.route("/tasks/update/<int:task_id>", methods=["PUT"])
 @token_required
 def update_task(current_user, task_id):
-    task = Task.query.get(task_id)
-    if task:
-        task.name = request.json['name']
-        task.status = request.json['status']
-        task.data = request.json['data']
-        task.user_id = current_user.id
-        db.session.commit()
-        return jsonify({"id": task.id, "name": task.name, "status": task.status, "data": task.data})
-    return "Дело не найдено", 404
+    try:
+        task = Task.query.get(task_id)
+        if task:
+            task.name = request.json['name']
+            task.status = request.json['status']
+            task.data = request.json['data']
+            task.user_id = current_user.id
+            db.session.commit()
+            return jsonify({"id": task.id, "name": task.name, "status": task.status, "data": task.data})
+        return "Дело не найдено", 404
+    except Exception as e:
+        return "Internal Server Error", 500
 
 @app.route("/tasks/delete/<int:task_id>", methods=["DELETE"])
 @token_required
 def delete_task(current_user, task_id):
-    task = Task.query.get(task_id)
-    if task:
-        db.session.delete(task)
-        db.session.commit()
-        return "Дело удалено", 200
-    return "Дело не найдено", 404
+    try:
+        task = Task.query.get(task_id)
+        if task:
+            db.session.delete(task)
+            db.session.commit()
+            return "Дело удалено", 200
+        return "Дело не найдено", 404
+    except Exception as e:
+        return "Internal Server Error", 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=80)
